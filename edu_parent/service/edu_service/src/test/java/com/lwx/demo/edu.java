@@ -16,7 +16,7 @@ public class edu {
         AutoGenerator mpg = new AutoGenerator();
         // 2、全局配置
         GlobalConfig gc = new GlobalConfig();
-        gc.setOutputDir("E:/final/Edu/edu_parent/service/edu_service" + "/src/main/java");
+        gc.setOutputDir("E:/Codes/Project/edu_parent/service/edu_service" + "/src/main/java");
         gc.setAuthor("lwx");
         gc.setOpen(false); //生成后是否打开资源管理器
         gc.setFileOverride(false); //重新生成时文件是否覆盖
@@ -33,7 +33,7 @@ public class edu {
 
         // 3、数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://localhost:3306/edu_demo?serverTimezone=GMT%2B8");
+        dsc.setUrl("jdbc:mysql://39.108.94.205:3306/edu?serverTimezone=GMT%2B8");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
         dsc.setPassword("root");
@@ -52,7 +52,7 @@ public class edu {
 
         // 5、策略配置
         StrategyConfig strategy = new StrategyConfig();
-        strategy.setInclude("edu_subject");
+        strategy.setInclude("edu_chapter");
         strategy.setNaming(NamingStrategy.underline_to_camel);//数据库表映射到实体的命名策略
         strategy.setTablePrefix(pc.getModuleName() + "_"); //生成实体时去掉表前缀
 
