@@ -1,5 +1,6 @@
 package com.lwx.edu.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.lwx.edu.entity.Course;
 import com.lwx.edu.entity.CourseDescription;
 import com.lwx.edu.entity.vo.CourseVo;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.Wrapper;
 
 /**
  * @author lwx
@@ -34,6 +36,21 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         description.setDescription(courseVo.getDescription());
         description.setId(course.getId());
         courseDescriptionService.save(description);
+        return course.getId();
+    }
+
+    @Override
+    public String updateCourseInfo(CourseVo courseVo) {
+        QueryWrapper<Course> wrapper = new QueryWrapper<>();
+        wrapper.eq("id", courseVo.getId());
+        Course course = new Course();
+        BeanUtils.copyProperties(courseVo, course);
+        this.update(course, wrapper);
+
+        CourseDescription description = new CourseDescription();
+        BeanUtils.copyProperties(courseVo, description);
+        courseDescriptionService.updateById(description);
+
         return course.getId();
     }
 }

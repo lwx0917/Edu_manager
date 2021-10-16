@@ -11,4 +11,6 @@ import com.lwx.edu.entity.vo.CourseVo;
 public interface CourseService extends IService<Course> {
 
     String addCourseInfo(CourseVo courseVo);
+
+    String updateCourseInfo(CourseVo courseVo);
 }

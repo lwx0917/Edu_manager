@@ -45,5 +45,11 @@ public class CourseController {
         courseVo.setDescription(courseDesc.getDescription());
         return Result.ok().data("course", courseVo);
     }
+
+    @PostMapping("/updateCourseInfo")
+    public Result updateCourseInfo(@RequestBody CourseVo courseVo) {
+        String courseId = courseService.updateCourseInfo(courseVo);
+        return Result.ok().data("course", courseId);
+    }
 }
 
