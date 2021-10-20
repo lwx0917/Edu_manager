@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lwx.edu.mapper.CourseMapper">
+
+    <select id="getHotCourse" resultType="com.lwx.edu.entity.vo.CourseInfoVo">
+        select c.id, title, lesson_num, cover, t.name, view_count
+        from edu_course c
+                 inner join edu_teacher t
+                            on c.teacher_id = t.id
+        where status = 'Normal'
+        order by view_count desc
+        limit 8
+    </select>
+</mapper>

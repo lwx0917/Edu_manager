@@ -30,4 +30,19 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
         BeanUtils.copyProperties(vo, video);
         baseMapper.insert(video);
     }
+
+    @Override
+    public VideoInfoVo getVideoById(String id) {
+        Video video = this.getById(id);
+        VideoInfoVo vo = new VideoInfoVo();
+        BeanUtils.copyProperties(video, vo);
+        return vo;
+    }
+
+    @Override
+    public void updateVideo(VideoInfoVo vo) {
+        Video video = new Video();
+        BeanUtils.copyProperties(vo, video);
+        this.updateById(video);
+    }
 }

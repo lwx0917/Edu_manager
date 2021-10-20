@@ -24,7 +24,7 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
     @Override
     public void pageRefer(Page<Teacher> page, TeacherQuery teacherQuery) {
         QueryWrapper<Teacher> wrapper = new QueryWrapper<>();
-        wrapper.orderByAsc("sort");
+        wrapper.orderByAsc("gmt_create");
         if (teacherQuery == null) {
             baseMapper.selectPage(page, wrapper);
             return;

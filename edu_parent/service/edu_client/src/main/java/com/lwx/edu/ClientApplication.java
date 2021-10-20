@@ -10,8 +10,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @ComponentScan(basePackages = {"com.lwx"})
 @MapperScan("com.lwx.edu.mapper")
 @EnableSwagger2
-public class EduApplication {
+public class ClientApplication {
     public static void main(String[] args) {
-        SpringApplication.run(EduApplication.class, args);
+        SpringApplication.run(ClientApplication.class, args);
     }
 }

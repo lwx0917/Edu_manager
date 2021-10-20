@@ -13,4 +13,9 @@ public interface VideoService extends IService<Video> {
     boolean getCountByChapterId(String id);
 
     void saveVideoInfo(VideoInfoVo vo);
+
+    VideoInfoVo getVideoById(String id);
+
+    void updateVideo(VideoInfoVo vo);
+
 }
