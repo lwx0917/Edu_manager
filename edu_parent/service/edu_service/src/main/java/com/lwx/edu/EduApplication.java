@@ -8,7 +8,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.lwx"})
-@MapperScan("com.lwx.edu.mapper")
+@MapperScan("com.lwx.edu.mapper")   
 @EnableSwagger2
 public class EduApplication {
     public static void main(String[] args) {

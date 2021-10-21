@@ -6,10 +6,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.lwx.edu.entity.vo.TeacherQuery;
 
 /**
- * <p>
- * 讲师 服务类
- * </p>
- *
  * @author lwx
  * @since 2021-10-06
  */

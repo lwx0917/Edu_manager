@@ -11,10 +11,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
- * <p>
- * 讲师 服务实现类
- * </p>
- *
  * @author lwx
  * @since 2021-10-06
  */
