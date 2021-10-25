@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lwx.edu.mapper.NewsInfoMapper">
+    <update id="publishNews">
+        update news_info
+        set status = 1
+        where id = #{id}
+    </update>
+
+    <select id="getLastId" resultType="java.lang.Integer">
+        select LAST_INSERT_ID();
+    </select>
+    <select id="getNewsInfo" resultType="com.lwx.edu.entity.vo.NewsVo">
+        select i.id, i.title as topic, t.name, s.title, i.cover, c.content, i.gmt_create as createTime
+        from news_info i
+                 inner join news_content c on i.id = c.nid
+                 inner join edu_teacher t on i.teacher_id = t.id
+                 inner join edu_subject s on i.subject_id = s.id
+        where i.is_deleted = 0
+          and status = 0
+          and i.id = #{id}
+    </select>
+    <select id="getAllNews" resultType="com.lwx.edu.entity.vo.NewsVo">
+        select i.id, i.title as topic, t.name, s.title, i.cover, c.content, i.gmt_create as createTime
+        from news_info i
+                 inner join news_content c on i.id = c.nid
+                 inner join edu_teacher t on i.teacher_id = t.id
+                 inner join edu_subject s on i.subject_id = s.id
+        where i.is_deleted = 0
+          and status = 1
+    </select>
+</mapper>
