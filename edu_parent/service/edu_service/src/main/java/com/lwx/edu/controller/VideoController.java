@@ -1,11 +1,13 @@
 package com.lwx.edu.controller;
 
 
+import com.lwx.edu.entity.History;
+import com.lwx.edu.entity.vo.HistoryVo;
 import com.lwx.edu.entity.vo.VideoInfoVo;
 import com.lwx.edu.entity.vo.VideoVo;
+import com.lwx.edu.service.HistoryService;
 import com.lwx.edu.service.VideoService;
 import com.lwx.utils.Result;
-import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,15 +23,19 @@ public class VideoController {
     @Autowired
     private VideoService videoService;
 
+    @Autowired
+    private HistoryService historyService;
+
     @PostMapping("/addVideo")
     public Result addVideo(@RequestBody VideoInfoVo vo) {
         videoService.saveVideoInfo(vo);
         return Result.ok();
     }
 
-    @GetMapping("/getVideoById/{id}")
-    public Result getVideoById(@PathVariable String id) {
+    @PostMapping("/getVideoById/{id}")
+    public Result getVideoById(@PathVariable String id, @RequestBody History history) {
         VideoInfoVo vo = videoService.getVideoById(id);
+        historyService.insertHistory(history);
         return Result.ok().data("video", vo);
     }
 

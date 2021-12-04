@@ -17,7 +17,7 @@
                  inner join edu_teacher t on i.teacher_id = t.id
                  inner join edu_subject s on i.subject_id = s.id
         where i.is_deleted = 0
-          and status = 0
+#           and status = 0
           and i.id = #{id}
     </select>
     <select id="getAllNews" resultType="com.lwx.edu.entity.vo.NewsVo">

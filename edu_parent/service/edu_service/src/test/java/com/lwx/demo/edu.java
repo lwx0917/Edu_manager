@@ -33,7 +33,7 @@ public class edu {
 
         // 3、数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://39.108.94.205:3306/edu?serverTimezone=GMT%2B8");
+        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/edu?serverTimezone=GMT%2B8");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
         dsc.setPassword("root");
@@ -52,7 +52,7 @@ public class edu {
 
         // 5、策略配置
         StrategyConfig strategy = new StrategyConfig();
-        strategy.setInclude("edu_direction");
+        strategy.setInclude("edu_question");
         strategy.setNaming(NamingStrategy.underline_to_camel);//数据库表映射到实体的命名策略
         strategy.setTablePrefix(pc.getModuleName() + "_"); //生成实体时去掉表前缀
 

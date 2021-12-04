@@ -1,9 +1,11 @@
 package com.lwx.edu.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lwx.edu.entity.Teacher;
+import com.lwx.edu.entity.query.PageQuery;
 import com.lwx.edu.entity.vo.TeacherQuery;
 import com.lwx.edu.mapper.TeacherMapper;
 import com.lwx.edu.service.TeacherService;
@@ -42,5 +44,18 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
             wrapper.le("gmt_create", end);
         }
         baseMapper.selectPage(page, wrapper);
+    }
+
+    @Override
+    public Integer verityIsExist(String name) {
+        QueryWrapper<Teacher> wrapper = new QueryWrapper<>();
+        wrapper.eq("name", name);
+        return baseMapper.selectCount(wrapper);
+    }
+
+    @Override
+    public IPage<Teacher> teacherPage(PageQuery pageQuery) {
+        IPage<Teacher> page = new Page<>(pageQuery.getCurrent(), pageQuery.getSize());
+        return baseMapper.selectPage(page,null);
     }
 }

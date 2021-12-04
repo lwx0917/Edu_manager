@@ -1,0 +1,13 @@
+        #         SELECT r.id,
+#                user_id,
+#                publish_id,
+#                content,
+#                nickName,
+#                salt,
+#                good,
+#                bed,
+#                (select nickName from user where id = r.reply_id),
+#                r.gmt_create,
+#                mark
+#         from discuss_reply as r
+#                  inner join user on r.user_id = user.id ${ew.customSqlSegment}

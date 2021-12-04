@@ -1,21 +1,45 @@
 server:
   port: 8888
 spring:
+  main:
+    allow-bean-definition-overriding: true
   application:
     name: edu_client
+  http:
+    encoding:
+      charset: UTF-8
   profiles:
     active: dev
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    #    url: jdbc:mysql://localhost:3306/edu?serverTimezone=GMT%2B8
-    url: jdbc:mysql://39.108.94.205:3306/edu?serverTimezone=GMT%2B8
+    url: jdbc:mysql://localhost:3306/edu?serverTimezone=GMT%2B8
+    #    url: jdbc:mysql://39.108.94.205:3306/edu?serverTimezone=GMT%2B8
     username: root
     password: root
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+  redis:
+    host: 39.108.94.205
+    port: 6379
+    password: 171016
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 500
+        min-idle: 0
+    lettuce:
+      shutdown-timeout: 0
 
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath*:mapper/*.xml
+
+
+config:
+  jwt:
+    secret: abcdefg1234567
+    expire: 3600
+    header: token

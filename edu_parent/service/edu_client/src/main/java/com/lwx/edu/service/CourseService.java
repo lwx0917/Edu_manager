@@ -1,9 +1,10 @@
 package com.lwx.edu.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lwx.edu.entity.Course;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lwx.edu.entity.vo.CourseInfoVo;
+import com.lwx.edu.entity.Course;
+import com.lwx.edu.entity.query.PageQuery;
+import com.lwx.edu.entity.vo.*;
 
 import java.util.List;
 
@@ -13,9 +14,21 @@ import java.util.List;
  */
 public interface CourseService extends IService<Course> {
 
-    List<CourseInfoVo> getHotCourse();
+    List<HotCourseVo> getHotCourse();
 
-    List<String> getHotImages();
+    List<ImageVo> getHotImages();
 
-    void searchCourse(Page<Course> page, String keyWord);
+    List<HotCourseVo> getAllCourse();
+
+    HotCourseVo getCourseById(String id);
+
+    List<HotCourseVo> getCourseBySubject(String id);
+
+    CourseList getCourseList(String id);
+
+    List<HotCourseVo> getCourseClassify(String id);
+
+    IPage<SearchVo> searchCourse(String keyWord, PageQuery pageQuery);
+
+    List<WordVo> getHotWords();
 }

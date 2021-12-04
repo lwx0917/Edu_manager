@@ -7,7 +7,7 @@
 <!--        <module>edu_service</module>-->
         <module>service/edu_service</module>
         <module>common</module>
-        <module>edu_client</module>
+<!--        <module>edu_client</module>-->
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

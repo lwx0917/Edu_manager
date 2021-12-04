@@ -33,4 +33,11 @@
                  inner join edu_teacher t
                             on c.teacher_id = t.id ${ew.customSqlSegment}
     </select>
+
+    <select id="getCourseBySubjectId" resultType="com.lwx.edu.entity.vo.CourseInfoVo">
+        select id, subject_id, subject_parent_id, title
+        from edu_course
+        where subject_id = #{id}
+    </select>
+
 </mapper>

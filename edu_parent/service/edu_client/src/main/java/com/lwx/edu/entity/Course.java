@@ -1,36 +1,35 @@
 package com.lwx.edu.entity;
 
-import java.math.BigDecimal;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import java.util.Date;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+
 /**
- * <p>
- * 课程
- * </p>
- *
  * @author lwx
- * @since 2021-10-20
+ * @since 2021-10-13
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("edu_course")
-@ApiModel(value="Course对象", description="课程")
+@ApiModel(value = "Course对象", description = "课程")
 public class Course implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public static final String COURSE_DRAFT = "Draft";
+    public static final String COURSE_NORMAL = "Normal";
+
+
     @ApiModelProperty(value = "课程ID")
-    @TableId(value = "id", type = IdType.ID_WORKER)
+    @TableId(value = "id", type = IdType.ID_WORKER_STR)
     private String id;
 
     @ApiModelProperty(value = "课程讲师ID")
@@ -67,9 +66,11 @@ public class Course implements Serializable {
     private Integer isDeleted;
 
     @ApiModelProperty(value = "创建时间")
+    @TableField(fill = FieldFill.INSERT)
     private Date gmtCreate;
 
     @ApiModelProperty(value = "更新时间")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date gmtModified;
 
 

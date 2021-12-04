@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lwx.edu.mapper.HistoryMapper">
+    <update id="updateSecond">
+        update edu_history
+        set second = #{second}
+        where id = #{id}
+    </update>
+
+    <select id="getHistoryByUserId" resultType="com.lwx.edu.entity.vo.HistoryVo">
+        select distinct c.id    as course_id,
+                        c.title,
+                        c.cover,
+                        h.user_id,
+                        h.now_time,
+                        h.chapter_id,
+                        h.video_id,
+                        h.second,
+                        s.title as chapter,
+                        v.title as video
+        from edu_history as h
+                 inner join
+             edu_course as c
+             on h.course_id = c.id
+                 inner join
+             edu_chapter as s on h.chapter_id = s.id
+                 inner join edu_video v
+                            on h.video_id = v.id
+            ${ew.customSqlSegment}
+        order by now_time
+    </select>
+</mapper>

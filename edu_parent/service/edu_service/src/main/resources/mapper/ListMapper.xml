@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lwx.edu.mapper.ListMapper">
+
+
+    <select id="getListInfo" resultType="com.lwx.edu.entity.vo.ListVo">
+        select s.id, s.category_id, s.stage_id, s.course_id, c.title, c.cover
+        from edu_list as s
+                 inner join edu_course as c
+                            on s.course_id = c.id
+        where s.stage_id = #{stageId};
+    </select>
+</mapper>

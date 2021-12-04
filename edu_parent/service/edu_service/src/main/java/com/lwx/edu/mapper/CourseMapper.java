@@ -5,10 +5,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.lwx.edu.entity.Course;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.lwx.edu.entity.vo.CourseQuery;
-import com.lwx.edu.entity.vo.PublishInfoVo;
-import com.lwx.edu.entity.vo.ResultCourseVo;
+import com.lwx.edu.entity.vo.*;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 
 /**
@@ -22,4 +22,6 @@ public interface CourseMapper extends BaseMapper<Course> {
     IPage<ResultCourseVo> selectCourseInfo(IPage<ResultCourseVo> page, @Param(Constants.WRAPPER) Wrapper<CourseQuery> wrapper);
 
     IPage<ResultCourseVo> selectCourseInfoNoArg(IPage<ResultCourseVo> page);
+
+    List<CourseInfoVo> getCourseBySubjectId(String id);
 }

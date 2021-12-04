@@ -3,10 +3,9 @@ package com.lwx.edu.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lwx.edu.entity.Course;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lwx.edu.entity.vo.CourseQuery;
-import com.lwx.edu.entity.vo.CourseVo;
-import com.lwx.edu.entity.vo.PublishInfoVo;
-import com.lwx.edu.entity.vo.ResultCourseVo;
+import com.lwx.edu.entity.vo.*;
+
+import java.util.List;
 
 /**
  * @author lwx
@@ -25,4 +24,10 @@ public interface CourseService extends IService<Course> {
     void pageRefer(Page<ResultCourseVo> page, CourseQuery courseQuery);
 
     void delCourse(String id);
+
+    List<CourseVo> getCourses();
+
+    CourseListVo getCourseList();
+
+    List<CourseInfoVo> getCourseBySubjectId(String id);
 }

@@ -5,18 +5,17 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lwx.edu.entity.Course;
 import com.lwx.edu.entity.CourseDescription;
-import com.lwx.edu.entity.vo.CourseQuery;
-import com.lwx.edu.entity.vo.CourseVo;
-import com.lwx.edu.entity.vo.PublishInfoVo;
-import com.lwx.edu.entity.vo.ResultCourseVo;
+import com.lwx.edu.entity.vo.*;
 import com.lwx.edu.service.CourseDescriptionService;
 import com.lwx.edu.service.CourseService;
+import com.lwx.edu.service.StatisticsDailyService;
 import com.lwx.utils.Result;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author lwx
@@ -29,6 +28,9 @@ public class CourseController {
 
     @Autowired
     private CourseService courseService;
+
+    @Autowired
+    private StatisticsDailyService dailyService;
 
     @Autowired
     private CourseDescriptionService courseDescriptionService;
@@ -73,6 +75,7 @@ public class CourseController {
     @PutMapping("/publishCourse/{id}")
     public Result publishCourse(@PathVariable String id) {
         courseService.publishCourse(id);
+        dailyService.updateCourse();
         return Result.ok();
     }
 
@@ -90,6 +93,28 @@ public class CourseController {
     public Result delCourse(@PathVariable String id) {
         courseService.delCourse(id);
         return Result.ok();
+    }
+
+    @GetMapping("/getCourses")
+    public Result getCourses() {
+        try {
+            List<CourseVo> courses = courseService.getCourses();
+            return Result.ok().data("courses", courses);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Result.error().message("获取信息失败");
+        }
+    }
+
+    @GetMapping("/getCourseList")
+    public Result getCourseList(){
+        try {
+            CourseListVo courseList = courseService.getCourseList();
+            return Result.ok().data("list",courseList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Result.error();
+        }
     }
 }
 

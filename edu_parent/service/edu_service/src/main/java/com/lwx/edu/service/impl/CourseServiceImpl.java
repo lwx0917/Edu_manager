@@ -5,21 +5,17 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lwx.edu.entity.Course;
 import com.lwx.edu.entity.CourseDescription;
-import com.lwx.edu.entity.vo.CourseQuery;
-import com.lwx.edu.entity.vo.CourseVo;
-import com.lwx.edu.entity.vo.PublishInfoVo;
-import com.lwx.edu.entity.vo.ResultCourseVo;
+import com.lwx.edu.entity.Subject;
+import com.lwx.edu.entity.vo.*;
 import com.lwx.edu.mapper.CourseMapper;
-import com.lwx.edu.service.ChapterService;
-import com.lwx.edu.service.CourseDescriptionService;
-import com.lwx.edu.service.CourseService;
+import com.lwx.edu.service.*;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.lwx.edu.service.VideoService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author lwx
@@ -30,6 +26,9 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Resource
     private CourseDescriptionService courseDescriptionService;
+
+    @Resource
+    private SubjectService subjectService;
 
     @Resource
     private ChapterService chapterService;
@@ -122,4 +121,47 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         chapterService.remove(wrapper);
         videoService.remove(wrapper);
     }
+
+    @Override
+    public List<CourseVo> getCourses() {
+        return null;
+    }
+
+    @Override
+    public CourseListVo getCourseList() {
+        QueryWrapper<Subject> subjectWrapper = new QueryWrapper<>();
+        subjectWrapper.eq("parent_id",0);
+        CourseListVo courseListVo = new CourseListVo();
+        ArrayList<SubjectListVo> subjectListVos = new ArrayList<>();
+        courseListVo.setCourseList(subjectListVos);
+        // 1
+        List<Subject> parentSubjectList = subjectService.list(subjectWrapper);
+        for(Subject subject:parentSubjectList){
+            QueryWrapper<Subject> subjectWrapper2 = new QueryWrapper<>();
+            subjectWrapper2.eq("parent_id",subject.getId());
+            // 2
+            List<Subject> subjectList = subjectService.list(subjectWrapper2);
+            SubjectListVo subjectListVo = new SubjectListVo();
+            BeanUtils.copyProperties(subject,subjectListVo);
+            ArrayList<ChildSubjectVo> childSubjectVos = new ArrayList<>();
+            for(Subject childSubject:subjectList){
+                // 3
+                List<CourseInfoVo> courseBySubjectId = baseMapper.getCourseBySubjectId(childSubject.getId());
+                ChildSubjectVo childSubjectVo = new ChildSubjectVo();
+                BeanUtils.copyProperties(childSubject,childSubjectVo);
+                childSubjectVo.setChildren(courseBySubjectId);
+                childSubjectVos.add(childSubjectVo);
+            }
+            subjectListVo.setChildren(childSubjectVos);
+            subjectListVos.add(subjectListVo);
+        }
+        return courseListVo;
+    }
+
+    @Override
+    public List<CourseInfoVo> getCourseBySubjectId(String id) {
+        return courseMapper.getCourseBySubjectId(id);
+    }
+
+
 }

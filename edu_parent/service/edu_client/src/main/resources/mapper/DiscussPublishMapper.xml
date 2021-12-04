@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lwx.edu.mapper.DiscussPublishMapper">
+
+    <update id="good">
+        update discuss_publish
+        set good=good + 1
+        where id = #{id}
+    </update>
+
+    <update id="bed">
+        update discuss_publish
+        set bed=bed + 1
+        where id = #{id}
+    </update>
+    <select id="getDiscussById" resultType="com.lwx.edu.entity.vo.DiscussVo">
+        select p.id,
+               p.user_id,
+               u.nickName,
+               u.sign,
+               p.content,
+               u.salt,
+               good,
+               bed,
+               p.gmt_create
+        from discuss_publish as p
+                 inner join user as u
+                            on p.user_id = u.id
+        where p.id = #{id}
+    </select>
+    <select id="getDiscussList" resultType="com.lwx.edu.entity.vo.DiscussVo">
+        select distinct p.id,
+                        p.user_id,
+                        u.nickName,
+                        u.sign,
+                        p.content,
+                        u.salt,
+                        p.good,
+                        p.bed,
+                        (select count(1) from discuss_reply where publish_id = p.id) as num,
+                        p.gmt_create
+        from discuss_publish as p
+                 inner join user as u
+                            on p.user_id = u.id
+                 left join discuss_reply as r
+                           on p.id = r.publish_id
+    </select>
+    <select id="getDiscuss" resultType="com.lwx.edu.entity.vo.DiscussVo">
+        select p.id,
+               p.user_id,
+               u.nickName,
+               u.sign,
+               p.content,
+               u.salt,
+               good,
+               bed,
+               (select count(1) from discuss_reply where publish_id = p.id) as num,
+               p.gmt_create
+        from discuss_publish as p
+                 inner join user as u
+                            on p.user_id = u.id
+            order by gmt_create DESC
+    </select>
+</mapper>

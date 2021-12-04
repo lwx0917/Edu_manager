@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lwx.edu.mapper.CourseMapper">
 
-    <select id="getHotCourse" resultType="com.lwx.edu.entity.vo.CourseInfoVo">
-        select c.id, title, lesson_num, cover, t.name, view_count
+    <select id="getHotCourse" resultType="com.lwx.edu.entity.vo.HotCourseVo">
+        select c.id, title, lesson_num, cover, t.name as teacherName, view_count
         from edu_course c
                  inner join edu_teacher t
                             on c.teacher_id = t.id
@@ -11,11 +11,66 @@
         order by c.gmt_create desc
         limit 8
     </select>
-    <select id="getHotImages" resultType="java.lang.String">
-        select cover
+    <select id="getHotImages" resultType="com.lwx.edu.entity.vo.ImageVo">
+        select id, cover
         from edu_course
         where is_deleted = 0
         order by view_count desc
         limit 6
     </select>
+    <select id="getAllCourse" resultType="com.lwx.edu.entity.vo.HotCourseVo">
+        select c.id, title, lesson_num, cover, t.name as teacherName, view_count
+        from edu_course c
+                 inner join edu_teacher t
+                            on c.teacher_id = t.id
+        where status = 'Normal'
+        order by c.gmt_create desc
+    </select>
+    <select id="searchCourse" resultType="com.lwx.edu.entity.vo.CourseInfoVo">
+        select c.id, c.title, lesson_num, cover, view_count, t.name as teacherNamec
+        from edu_course c
+                 inner join edu_teacher t
+                            on c.teacher_id = t.id
+        where c.status = 'Normal'
+          and c.is_deleted = 0
+          and c.title like #{keyWord}
+    </select>
+    <select id="getCourseById" resultType="com.lwx.edu.entity.vo.HotCourseVo">
+        select c.id, title, lesson_num, t.name as teacherName, view_count, d.description as description
+        from edu_course c
+                 inner join edu_teacher t
+                            on c.teacher_id = t.id
+                 inner join edu_course_description as d
+                            on c.id = d.id
+        where c.id = #{id}
+    </select>
+    <select id="getCourseBySubject" resultType="com.lwx.edu.entity.vo.HotCourseVo">
+        select c.id, title, lesson_num, cover, t.name as teacherName, view_count
+        from edu_course c
+                 inner join edu_teacher t
+                            on c.teacher_id = t.id
+        where status = 'Normal'
+          and subject_parent_id = #{id}
+        order by c.gmt_create desc
+        limit 4
+    </select>
+    <select id="getCourseClassify" resultType="com.lwx.edu.entity.vo.HotCourseVo">
+        select c.id, title, lesson_num, cover, t.name as teacherName, view_count
+        from edu_course c
+                 inner join edu_teacher t
+                            on c.teacher_id = t.id
+        where subject_id = #{id}
+        order by c.gmt_create desc
+    </select>
+    <select id="selectCourses" resultType="com.lwx.edu.entity.vo.SearchVo">
+        select c.id, title, t.name as teacherName, lesson_num, cover, view_count, description
+        from edu_course as c
+                 inner join edu_teacher as t on c.teacher_id = t.id
+                 inner join edu_course_description as d on c.id = d.id
+            ${ew.customSqlSegment}
+    </select>
+    <select id="getHotWords" resultType="com.lwx.edu.entity.vo.WordVo">
+        select id,name as value from edu_course_hot;
+    </select>
+
 </mapper>
